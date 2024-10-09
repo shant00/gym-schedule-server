@@ -7,4 +7,4 @@ export type IBooking = {
   traineeId?: number;
   classSchedule?: IClassSchedule;
   classId?: number;
-}
+};

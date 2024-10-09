@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
-import { IClassSchedule } from './classSchedule.interface';
-
+import { PrismaClient } from "@prisma/client";
+import { IClassSchedule } from "./classSchedule.interface";
 
 const prisma = new PrismaClient();
-
 
 const createSchedule = async (data: IClassSchedule) => {
   // // Step 1: Get the day from the startTime
@@ -29,7 +27,9 @@ const createSchedule = async (data: IClassSchedule) => {
 
   // Step 3: Check if the existing count exceeds the limit of 5
   if (existingSchedules.length >= 5) {
-    throw new Error('Cannot create more than five class schedules for a single day.');
+    throw new Error(
+      "Cannot create more than five class schedules for a single day."
+    );
   }
 
   // Step 4: Ensure the new class schedule does not overlap with existing ones
@@ -45,7 +45,7 @@ const createSchedule = async (data: IClassSchedule) => {
   });
 
   if (overlappingSchedules.length > 0) {
-    throw new Error('New class schedule overlaps with an existing schedule.');
+    throw new Error("New class schedule overlaps with an existing schedule.");
   }
 
   const schedule = await prisma.classSchedule.create({
@@ -57,15 +57,18 @@ const createSchedule = async (data: IClassSchedule) => {
           id: data.trainerId,
         },
       },
-      bookings: data.bookings ? {
-        connect: data.bookings.map((booking: { id: number }) => ({ id: booking.id })),
-      } : undefined,
+      bookings: data.bookings
+        ? {
+            connect: data.bookings.map((booking: { id: number }) => ({
+              id: booking.id,
+            })),
+          }
+        : undefined,
     },
   });
 
   return schedule;
-
-}
+};
 const getOneDaySchedule = async () => {
   // Step 1: Get today's date
   const now = new Date();
@@ -111,31 +114,33 @@ const updateSchedule = async (id: number, data: IClassSchedule) => {
           id: data.trainerId,
         },
       },
-      bookings: data.bookings ? {
-        connect: data.bookings.map((booking: { id: number }) => ({ id: booking.id })),
-      } : undefined,
+      bookings: data.bookings
+        ? {
+            connect: data.bookings.map((booking: { id: number }) => ({
+              id: booking.id,
+            })),
+          }
+        : undefined,
     },
   });
 
   return schedule;
-}
+};
 
 const getSchedule = async (id: number) => {
   const schedule = await prisma.classSchedule.findUnique({ where: { id } });
   return schedule;
-}
+};
 
 const deleteSchedule = async (id: number) => {
   const schedule = await prisma.classSchedule.delete({ where: { id } });
   return schedule;
-}
+};
 
 const getAllSchedules = async () => {
   const schedules = await prisma.classSchedule.findMany();
   return schedules;
-}
-
-
+};
 
 export const classScheduleService = {
   createSchedule,
@@ -143,5 +148,5 @@ export const classScheduleService = {
   updateSchedule,
   deleteSchedule,
   getAllSchedules,
-  getOneDaySchedule
-}
+  getOneDaySchedule,
+};
