@@ -41,10 +41,10 @@ async function bootstrap() {
 bootstrap();
 
 // Handle graceful shutdown for Prisma
-process.on('SIGTERM', async () => {
-    console.log('SIGTERM is received');
-    if (server) {
-        server.close();
-    }
-    await prisma.$disconnect();
-});
+// process.on('SIGTERM', async () => {
+//     console.log('SIGTERM is received');
+//     if (server) {
+//         server.close();
+//     }
+//     await prisma.$disconnect();
+// });
