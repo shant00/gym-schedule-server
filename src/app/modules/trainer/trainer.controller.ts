@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
-import httpStatus from "http-status";
-import catchAsync from "../../../shared/catchAsync";
-import sendResponse from "../../../shared/sendResponse";
-import { IUser } from "../auth/auth.interface";
-import { IClassSchedule } from "../classSchedule/classSchedule.interface";
-import { TrainerService } from "./trainer.service";
+import { Request, Response } from 'express';
+import httpStatus from 'http-status';
+import catchAsync from '../../../shared/catchAsync';
+import sendResponse from '../../../shared/sendResponse';
+import { IUser } from '../auth/auth.interface';
+import { IClassSchedule } from '../classSchedule/classSchedule.interface';
+import { TrainerService } from './trainer.service';
 
 const registerTrainer = catchAsync(async (req: Request, res: Response) => {
   const user: IUser = await TrainerService.registerTrainer(req.body);
@@ -12,7 +12,7 @@ const registerTrainer = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUser>(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "User registered successfully !",
+    message: 'User registered successfully !',
     data: user,
   });
 });
@@ -26,7 +26,7 @@ const updateTrainer = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUser>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User updated successfully !",
+    message: 'User updated successfully !',
     data: user,
   });
 });
@@ -39,7 +39,7 @@ const getTrainer = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUser>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User fetched successfully !",
+    message: 'User fetched successfully !',
     data: user,
   });
 });
@@ -49,7 +49,7 @@ const deleteTrainer = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUser>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "User deleted successfully !",
+    message: 'User deleted successfully !',
   });
 });
 
@@ -58,7 +58,7 @@ const getAllTrainers = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IUser[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Users fetched successfully !",
+    message: 'Users fetched successfully !',
     data: users,
   });
 });
@@ -71,7 +71,7 @@ const getOneDayScheduleByTrainer = catchAsync(
     sendResponse<IClassSchedule[]>(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Users fetched successfully !",
+      message: 'Users fetched successfully !',
       data: schedules,
     });
   }

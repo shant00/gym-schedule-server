@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import httpStatus from "http-status";
-import catchAsync from "../../../shared/catchAsync";
-import sendResponse from "../../../shared/sendResponse";
-import { IClassSchedule } from "./classSchedule.interface";
-import { classScheduleService } from "./classSchedule.service";
+import { Request, Response } from 'express';
+import httpStatus from 'http-status';
+import catchAsync from '../../../shared/catchAsync';
+import sendResponse from '../../../shared/sendResponse';
+import { IClassSchedule } from './classSchedule.interface';
+import { classScheduleService } from './classSchedule.service';
 
 const createSchedule = catchAsync(async (req: Request, res: Response) => {
   const classSchedule: IClassSchedule =
@@ -12,7 +12,7 @@ const createSchedule = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IClassSchedule>(res, {
     statusCode: httpStatus.CREATED,
     success: true,
-    message: "Class Scheduled successfully !",
+    message: 'Class Scheduled successfully !',
     data: classSchedule,
   });
 });
@@ -24,7 +24,7 @@ const updateSchedule = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IClassSchedule>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Class Schedule updated successfully !",
+    message: 'Class Schedule updated successfully !',
     data: classSchedule,
   });
 });
@@ -36,7 +36,7 @@ const getSchedule = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IClassSchedule>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Class Schedule fetched successfully !",
+    message: 'Class Schedule fetched successfully !',
     data: classSchedule,
   });
 });
@@ -45,7 +45,7 @@ const deleteSchedule = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IClassSchedule>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Class Schedule deleted successfully !",
+    message: 'Class Schedule deleted successfully !',
   });
 });
 
@@ -55,7 +55,7 @@ const getAllSchedules = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IClassSchedule[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Class Schedules fetched successfully !",
+    message: 'Class Schedules fetched successfully !',
     data: classSchedules,
   });
 });
@@ -65,21 +65,25 @@ const getOneDaySchedule = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IClassSchedule[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Class Schedules fetched successfully !",
+    message: 'Class Schedules fetched successfully !',
     data: classSchedules,
   });
 });
 
-const getTrainerOneDaySchedule = catchAsync(async (req: Request, res: Response) => {
-  const classSchedules: IClassSchedule[] =
-    await classScheduleService.getTrainerOneDaySchedule(Number(req.params.id));
-  sendResponse<IClassSchedule[]>(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Class Schedules fetched successfully !",
-    data: classSchedules,
-  });
-});
+const getTrainerOneDaySchedule = catchAsync(
+  async (req: Request, res: Response) => {
+    const classSchedules: IClassSchedule[] =
+      await classScheduleService.getTrainerOneDaySchedule(
+        Number(req.params.id)
+      );
+    sendResponse<IClassSchedule[]>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Class Schedules fetched successfully !',
+      data: classSchedules,
+    });
+  }
+);
 
 export const classScheduleController = {
   createSchedule,
@@ -88,5 +92,5 @@ export const classScheduleController = {
   deleteSchedule,
   getAllSchedules,
   getOneDaySchedule,
-  getTrainerOneDaySchedule
+  getTrainerOneDaySchedule,
 };

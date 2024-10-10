@@ -1,18 +1,20 @@
-import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import config from "../../../config";
-import { ENUM_USER_ROLE } from "../../../enums/user";
-import { makeHashPassword } from "../../../shared/hashPassword";
-import { IUser } from "./auth.interface";
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import config from '../../../config';
+import { ENUM_USER_ROLE } from '../../../enums/user';
+import { makeHashPassword } from '../../../shared/hashPassword';
+import { IUser } from './auth.interface';
 
 const prisma = new PrismaClient();
 
 const registerUser = async (data: IUser) => {
   const hashedPassword = await makeHashPassword(data.password);
-  const findUser = await prisma.user.findUnique({ where: { email: data.email } });
+  const findUser = await prisma.user.findUnique({
+    where: { email: data.email },
+  });
   if (findUser) {
-    throw new Error("User already exists with this email");
+    throw new Error('User already exists with this email');
   }
   const user = await prisma.user.create({
     data: {
@@ -31,7 +33,7 @@ const registerUser = async (data: IUser) => {
 const loginUser = async (data: IUser) => {
   const user = await prisma.user.findUnique({ where: { email: data.email } });
   if (!user || !(await bcrypt.compare(data.password, user.password))) {
-    throw new Error("Invalid credentials");
+    throw new Error('Invalid credentials');
   }
 
   const token = jwt.sign({ id: user.id, role: user.role }, config.jwt.secret!, {

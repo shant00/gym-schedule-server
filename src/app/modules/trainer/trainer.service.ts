@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client";
-import httpStatus from "http-status";
-import { ENUM_USER_ROLE } from "../../../enums/user";
-import ApiError from "../../../errors/ApiError";
-import { makeHashPassword } from "../../../shared/hashPassword";
-import { IUser } from "../auth/auth.interface";
-import { classScheduleService } from "../classSchedule/classSchedule.service";
+import { PrismaClient } from '@prisma/client';
+import httpStatus from 'http-status';
+import { ENUM_USER_ROLE } from '../../../enums/user';
+import ApiError from '../../../errors/ApiError';
+import { makeHashPassword } from '../../../shared/hashPassword';
+import { IUser } from '../auth/auth.interface';
+import { classScheduleService } from '../classSchedule/classSchedule.service';
 
 const prisma = new PrismaClient();
 
@@ -44,7 +44,7 @@ const updateTrainer = async (id: number, data: IUser) => {
 const getTrainer = async (id: number) => {
   const user = await prisma.user.findUnique({ where: { id } });
   if (!user) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Record not found");
+    throw new ApiError(httpStatus.NOT_FOUND, 'Record not found');
   }
   return user;
 };
@@ -64,7 +64,7 @@ const getAllTrainers = async () => {
 const getOneDayScheduleByTrainer = async (trainerId: number) => {
   const allSchedule = await classScheduleService.getOneDaySchedule();
   const schedules = allSchedule.filter(
-    (schedule) => schedule.trainerId === trainerId
+    schedule => schedule.trainerId === trainerId
   );
   return schedules;
 };

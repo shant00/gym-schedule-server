@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
-import { ENUM_USER_ROLE } from "../../../enums/user";
-import { makeHashPassword } from "../../../shared/hashPassword";
-import { IUser } from "../auth/auth.interface";
+import { PrismaClient } from '@prisma/client';
+import { ENUM_USER_ROLE } from '../../../enums/user';
+import { makeHashPassword } from '../../../shared/hashPassword';
+import { IUser } from '../auth/auth.interface';
 
 const prisma = new PrismaClient();
 
