@@ -10,7 +10,10 @@ const prisma = new PrismaClient();
 
 const registerUser = async (data: IUser) => {
   const hashedPassword = await makeHashPassword(data.password);
-
+  const findUser = await prisma.user.findUnique({ where: { email: data.email } });
+  if (findUser) {
+    throw new Error("User already exists with this email");
+  }
   const user = await prisma.user.create({
     data: {
       name: data.name,
@@ -18,7 +21,7 @@ const registerUser = async (data: IUser) => {
       gender: data.gender,
       email: data.email,
       password: hashedPassword,
-      role: ENUM_USER_ROLE.ADMIN,
+      role: ENUM_USER_ROLE.TRAINEE,
     },
   });
 
@@ -27,7 +30,6 @@ const registerUser = async (data: IUser) => {
 
 const loginUser = async (data: IUser) => {
   const user = await prisma.user.findUnique({ where: { email: data.email } });
-
   if (!user || !(await bcrypt.compare(data.password, user.password))) {
     throw new Error("Invalid credentials");
   }

@@ -23,4 +23,18 @@ const LoginZodSchema = z.object({
   }),
 });
 
-export const AuthValidation = { RegistrationZodSchema, LoginZodSchema };
+const UpdateUserZodSchema = z.object({
+  body: z.object({
+    name: z
+      .string()
+      .min(3, { message: "Name must be at least 3 characters long." }).optional(),
+    image: z.string().url({ message: "Invalid image URL format." }).optional(),
+    gender: GenderEnum,
+    email: z.string().email({ message: "Invalid email format." }).optional(),
+    password: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters long." }).optional(),
+  }),
+});
+
+export const AuthValidation = { UpdateUserZodSchema, RegistrationZodSchema, LoginZodSchema };

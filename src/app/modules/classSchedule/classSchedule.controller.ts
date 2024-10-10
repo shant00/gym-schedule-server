@@ -70,6 +70,17 @@ const getOneDaySchedule = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getTrainerOneDaySchedule = catchAsync(async (req: Request, res: Response) => {
+  const classSchedules: IClassSchedule[] =
+    await classScheduleService.getTrainerOneDaySchedule(Number(req.params.id));
+  sendResponse<IClassSchedule[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Class Schedules fetched successfully !",
+    data: classSchedules,
+  });
+});
+
 export const classScheduleController = {
   createSchedule,
   updateSchedule,
@@ -77,4 +88,5 @@ export const classScheduleController = {
   deleteSchedule,
   getAllSchedules,
   getOneDaySchedule,
+  getTrainerOneDaySchedule
 };

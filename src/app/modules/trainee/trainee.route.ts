@@ -7,17 +7,17 @@ import { TraineeController } from "./trainee.controller";
 
 const router = express.Router();
 
-router.get(
-  "/:id",
-  auth(ENUM_USER_ROLE.TRAINEE),
-  TraineeController.updateTrainee
-);
-
 router.put(
   "/:id",
   auth(ENUM_USER_ROLE.TRAINEE),
-  validateRequest(AuthValidation.RegistrationZodSchema),
+  validateRequest(AuthValidation.UpdateUserZodSchema),
+  TraineeController.updateTrainee
+);
+
+router.get(
+  "/:id",
+  auth(ENUM_USER_ROLE.TRAINEE),
   TraineeController.getTrainee
 );
 
-export const TrainerRoutes = router;
+export const TraineeRoutes = router;

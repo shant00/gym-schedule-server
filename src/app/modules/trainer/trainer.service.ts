@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+import httpStatus from "http-status";
 import { ENUM_USER_ROLE } from "../../../enums/user";
+import ApiError from "../../../errors/ApiError";
 import { makeHashPassword } from "../../../shared/hashPassword";
 import { IUser } from "../auth/auth.interface";
 import { classScheduleService } from "../classSchedule/classSchedule.service";
@@ -41,6 +43,9 @@ const updateTrainer = async (id: number, data: IUser) => {
 
 const getTrainer = async (id: number) => {
   const user = await prisma.user.findUnique({ where: { id } });
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Record not found");
+  }
   return user;
 };
 

@@ -23,7 +23,7 @@ router.post(
 router.put(
   "/:id",
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.TRAINER),
-  validateRequest(AuthValidation.RegistrationZodSchema),
+  validateRequest(AuthValidation.UpdateUserZodSchema),
   TrainerController.updateTrainer
 );
 
